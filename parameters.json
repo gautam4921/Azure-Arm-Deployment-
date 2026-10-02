@@ -1,0 +1,243 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "southindia"
+        },
+        "subnetName": {
+            "value": "snet-southindia-5"
+        },
+        "virtualNetworkName": {
+            "value": "az_vnet_south_india"
+        },
+        "publicIpAddressId": {
+            "value": "azubuntu24si-ip"
+        },
+        "pipDeleteOption": {
+            "value": "Detach"
+        },
+        "publicIpAddressName": {
+            "value": "azubuntu24si-ip"
+        },
+        "publicIpAddressType": {
+            "value": "Static"
+        },
+        "publicIpAddressSku": {
+            "value": "Standard"
+        },
+        "networkInterfaceName": {
+            "value": "azubuntu24si535"
+        },
+        "enableAcceleratedNetworking": {
+            "value": false
+        },
+        "networkSecurityGroupName": {
+            "value": "azubuntu24si-nsg"
+        },
+        "networkSecurityGroupRules": {
+            "value": [
+                {
+                    "name": "HTTP",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "Tcp",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "80"
+                    }
+                },
+                {
+                    "name": "HTTPS",
+                    "properties": {
+                        "priority": 320,
+                        "protocol": "Tcp",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "443"
+                    }
+                },
+                {
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 340,
+                        "protocol": "Tcp",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                }
+            ]
+        },
+        "virtualMachineName": {
+            "value": "azubuntu24si"
+        },
+        "virtualMachineComputerName": {
+            "value": "azubuntu24si"
+        },
+        "virtualMachineRG": {
+            "value": "azvmsouthindia"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_D2s_v3"
+        },
+        "osDiskType": {
+            "value": "StandardSSD_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "nicDeleteOption": {
+            "value": "Delete"
+        },
+        "securityType": {
+            "value": "Standard"
+        },
+        "adminUsername": {
+            "value": "azureuser"
+        },
+        "adminPassword": {
+            "value": null
+        },
+        "enablePeriodicAssessment": {
+            "value": "ImageDefault"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "vnetLocation": {
+            "value": "southindia"
+        },
+        "vnetExtendedLocation": {
+            "value": {}
+        },
+        "vnetVirtualNetworkName": {
+            "value": "az_vnet_south_india"
+        },
+        "vnetResourceGroupName": {
+            "value": "azvmsouthindia"
+        },
+        "vnetDeploymentName": {
+            "value": "vnetsouthindiaTemplateDeployment1790868904519"
+        },
+        "vnetNatGatewaysWithNewPublicIpAddress": {
+            "value": []
+        },
+        "vnetNatGatewaysWithoutNewPublicIpAddress": {
+            "value": []
+        },
+        "vnetNatGatewayPublicIpAddressesNewNames": {
+            "value": []
+        },
+        "vnetNetworkSecurityGroupsNew": {
+            "value": []
+        },
+        "vnetProperties": {
+            "value": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "192.168.0.0/16"
+                    ]
+                },
+                "provisioningState": "Succeeded",
+                "resourceGuid": "c0530451-520d-4b72-a867-b3ce51019862",
+                "summarizedGatewayPrefixes": {
+                    "addressPrefixes": []
+                },
+                "encryption": {
+                    "enabled": false,
+                    "enforcement": "AllowUnencrypted"
+                },
+                "subnets": [
+                    {
+                        "name": "AzureFirewallSubnet",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefixes": [
+                                "192.168.0.0/26"
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "defaultOutboundAccess": false
+                        }
+                    },
+                    {
+                        "name": "AzureBastionSubnet",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefixes": [
+                                "192.168.0.64/26"
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "defaultOutboundAccess": false
+                        }
+                    },
+                    {
+                        "name": "default",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefixes": [
+                                "192.168.1.0/24"
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "defaultOutboundAccess": true
+                        }
+                    },
+                    {
+                        "name": "default2",
+                        "properties": {
+                            "provisioningState": "Succeeded",
+                            "addressPrefixes": [
+                                "192.168.2.0/24"
+                            ],
+                            "delegations": [
+                                {
+                                    "name": "Microsoft.BareMetal/AzureVMware",
+                                    "id": "/subscriptions/cd6208f9-14cc-4d2d-a201-43ec9eeda060/resourceGroups/azvmsouthindia/providers/Microsoft.Network/virtualNetworks/az_vnet_south_india/subnets/default2/delegations/Microsoft.BareMetal/AzureVMware",
+                                    "etag": "W/\"b29d5da3-0706-40ad-9ba7-e1b50beebb4c\"",
+                                    "properties": {
+                                        "provisioningState": "Succeeded",
+                                        "serviceName": "Microsoft.BareMetal/AzureVMware",
+                                        "actions": [
+                                            "Microsoft.Network/networkinterfaces/*",
+                                            "Microsoft.Network/virtualNetworks/subnets/join/action"
+                                        ]
+                                    },
+                                    "type": "Microsoft.Network/virtualNetworks/subnets/delegations"
+                                }
+                            ],
+                            "purpose": "HostedWorkloads",
+                            "privateEndpointNetworkPolicies": "NetworkSecurityGroupEnabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "snet-southindia-5",
+                        "properties": {
+                            "addressPrefixes": [
+                                "192.168.3.0/24"
+                            ]
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false
+            }
+        },
+        "tags": {}
+    }
+}
