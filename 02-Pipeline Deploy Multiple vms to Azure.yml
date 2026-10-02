@@ -1,0 +1,96 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- group: 'Variable Group for Multiple VMs'
+
+stages:
+- stage: Deploy
+  displayName: 'Deploy Multiple Ubuntu VMs'
+
+  jobs:
+  - job: DeployARM
+    displayName: 'Deploy ARM Template'
+
+    steps:
+
+    # -------------------------------------------------
+    # Checkout repository
+    # -------------------------------------------------
+    - checkout: self
+      clean: true
+
+    # -------------------------------------------------
+    # Validate ARM files
+    # -------------------------------------------------
+    - bash: |
+        set -e
+
+        echo "Checking ARM template files..."
+
+        test -f "$(Build.SourcesDirectory)/template.json"
+        test -f "$(Build.SourcesDirectory)/parameters.json"
+
+        echo "template.json found"
+        echo "parameters.json found"
+
+      displayName: 'Validate ARM Template Files'
+
+    # -------------------------------------------------
+    # Display non-secret variables
+    # -------------------------------------------------
+    - bash: |
+        echo "Location              : ${LOCATION}"
+        echo "VM Size               : ${VM_SIZE}"
+        echo "OS Disk Type          : ${OS_DISK_TYPE}"
+        echo "Admin Username        : ${AZURE_USER}"
+        echo "Admin Password        : ********"
+
+      displayName: 'Validate Variable Group'
+
+      env:
+        LOCATION: $(location)
+        VM_SIZE: $(virtualMachineSize)
+        OS_DISK_TYPE: $(osDiskType)
+        AZURE_USER: $(azureuser)
+
+    # -------------------------------------------------
+    # Deploy ARM Template
+    # -------------------------------------------------
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Deploy Multiple Ubuntu VMs'
+
+      inputs:
+
+        deploymentScope: 'Resource Group'
+
+        azureResourceManagerConnection: 'Azure-devops-svc-connection to Azure'
+
+        subscriptionId: 'cd6208f9-14cc-4d2d-a201-43ec9eeda060'
+
+        action: 'Create Or Update Resource Group'
+
+        resourceGroupName: 'azvmsouthindia'
+
+        location: 'South India'
+
+        templateLocation: 'Linked artifact'
+
+        csmFile: '$(Build.SourcesDirectory)/template.json'
+
+        csmParametersFile: '$(Build.SourcesDirectory)/parameters.json'
+
+        overrideParameters: >
+          -location "$(location)"
+          -virtualMachineSize "$(virtualMachineSize)"
+          -osDiskType "$(osDiskType)"
+          -adminUsername "$(azureuser)"
+          -adminPassword "$(adminPassword)"
+
+        deploymentMode: 'Incremental'
+
+        deploymentName: 'AzArm-MultiVM-$(Build.BuildId)'
+
