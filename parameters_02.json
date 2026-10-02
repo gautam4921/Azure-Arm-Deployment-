@@ -106,7 +106,7 @@
             "value": "azureuser"
         },
         "adminPassword": {
-            "value": null
+            "value": ""
         },
         "virtualMachines": { 
         "value": [ 
