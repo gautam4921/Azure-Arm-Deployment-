@@ -113,7 +113,8 @@
          { "name": "azubuntu24si01", "computerName": "azubuntu24si01" }, 
          { "name": "azubuntu24si02", "computerName": "azubuntu24si02" }, 
          { "name": "azubuntu24si03", "computerName": "azubuntu24si03" } 
-        ]
+         ]
+        },   
         
         "enablePeriodicAssessment": {
             "value": "ImageDefault"
