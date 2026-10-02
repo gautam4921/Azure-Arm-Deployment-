@@ -1,0 +1,29 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  group: Variable Group for AzUbuntu24  
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy ARM Template'
+    steps:   
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: 'Azure-devops-svc-connection to Azure'
+        subscriptionId: 'cd6208f9-14cc-4d2d-a201-43ec9eeda060'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: 'azvmsouthindia'
+        location: 'South India'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(system.defaultworkingdirectory)/template.json'
+        csmParametersFile: '$(system.defaultworkingdirectory)/parameters.json'
+        overrideParameters: '-location "$(location)" -virtualMachineName "$(virtualMachineName)" -virtualMachineSize "$(virtualMachineSize)" -networkInterfaceName "$(networkInterfaceName)" -osDiskType "$(osDiskType)" -publicIpAddressName "$(publicIpAddressName)" -virtualMachineComputerName "$(virtualMachineComputerName)" -adminUsername "$(azureuser)" -adminPassword "$(adminPassword)"'
+        deploymentMode: 'Incremental'
+        deploymentName: 'AzArm-CI-Azubu2402'
