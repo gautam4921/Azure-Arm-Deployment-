@@ -2,28 +2,77 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 variables:
-  group: Variable Group for AzUbuntu24  
+- group: 'Variable Group for AzUbuntu24'
 
 stages:
+
 - stage: Deploy
+  displayName: 'Deploy ARM Template'
+
   jobs:
+
   - job: Deploy
     displayName: 'Deploy ARM Template'
-    steps:   
+
+    steps:
+
+    - checkout: self
+
+    # Verify variables and ARM files
+    - bash: |
+        echo "Checking ARM template files..."
+        ls -la "$(Build.SourcesDirectory)"
+
+        echo "Location variable:"
+        echo "$(location)"
+
+        echo "VM name:"
+        echo "$(virtualMachineName)"
+
+        echo "VM size:"
+        echo "$(virtualMachineSize)"
+
+        test -f "$(Build.SourcesDirectory)/template.json"
+        test -f "$(Build.SourcesDirectory)/parameters.json"
+
+      displayName: 'Validate Pipeline Variables and ARM Files'
+
     - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Deploy ARM Template'
+
       inputs:
         deploymentScope: 'Resource Group'
+
         azureResourceManagerConnection: 'Azure-devops-svc-connection to Azure'
+
         subscriptionId: 'cd6208f9-14cc-4d2d-a201-43ec9eeda060'
+
         action: 'Create Or Update Resource Group'
+
         resourceGroupName: 'azvmsouthindia'
+
         location: 'South India'
+
         templateLocation: 'Linked artifact'
-        csmFile: '$(system.defaultworkingdirectory)/template.json'
-        csmParametersFile: '$(system.defaultworkingdirectory)/parameters.json'
-        overrideParameters: '-location "$(location)" -virtualMachineName "$(virtualMachineName)" -virtualMachineSize "$(virtualMachineSize)" -networkInterfaceName "$(networkInterfaceName)" -osDiskType "$(osDiskType)" -publicIpAddressName "$(publicIpAddressName)" -virtualMachineComputerName "$(virtualMachineComputerName)" -adminUsername "$(azureuser)" -adminPassword "$(adminPassword)"'
+
+        csmFile: '$(Build.SourcesDirectory)/template.json'
+
+        csmParametersFile: '$(Build.SourcesDirectory)/parameters.json'
+
+        overrideParameters: >
+          -location "$(location)"
+          -virtualMachineName "$(virtualMachineName)"
+          -virtualMachineSize "$(virtualMachineSize)"
+          -networkInterfaceName "$(networkInterfaceName)"
+          -osDiskType "$(osDiskType)"
+          -publicIpAddressName "$(publicIpAddressName)"
+          -virtualMachineComputerName "$(virtualMachineComputerName)"
+          -adminUsername "$(azureuser)"
+          -adminPassword "$(adminPassword)"
+
         deploymentMode: 'Incremental'
+
         deploymentName: 'AzArm-CI-Azubu2402'
