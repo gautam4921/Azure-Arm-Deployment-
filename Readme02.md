@@ -12,8 +12,11 @@ publicIpAddressName
 in the Variable Group, keep only common configuration there:
 
 location = South India
+
 virtualMachineSize = Standard_B2s
+
 osDiskType = Premium_LRS
+
 azureuser = azureuser 
 
 Then define the 3 VM names in parameters.json.
