@@ -64,33 +64,16 @@ stages:
       displayName: 'Deploy Multiple Ubuntu VMs'
 
       inputs:
-
         deploymentScope: 'Resource Group'
-
         azureResourceManagerConnection: 'Azure-devops-svc-connection to Azure'
-
         subscriptionId: 'cd6208f9-14cc-4d2d-a201-43ec9eeda060'
-
         action: 'Create Or Update Resource Group'
-
         resourceGroupName: 'azvmsouthindia'
-
         location: 'South India'
-
         templateLocation: 'Linked artifact'
-
-        csmFile: '$(Build.SourcesDirectory)/template.json'
-
-        csmParametersFile: '$(Build.SourcesDirectory)/parameters.json'
-
-        overrideParameters: >
-          -location "$(location)"
-          -virtualMachineSize "$(virtualMachineSize)"
-          -osDiskType "$(osDiskType)"
-          -adminUsername "$(azureuser)"
-          -adminPassword "$(adminPassword)"
-
+        csmFile: '$(Build.SourcesDirectory)/template_02.json'
+        csmParametersFile: '$(Build.SourcesDirectory)/parameters_02.json'
+        overrideParameters: '-location "$(location)" -virtualMachineSize "$(virtualMachineSize)" -osDiskType "$(osDiskType)" -adminUsername "$(azureuser)" -adminPassword "$(adminPassword)"'
         deploymentMode: 'Incremental'
-
         deploymentName: 'AzArm-MultiVM-$(Build.BuildId)'
 
